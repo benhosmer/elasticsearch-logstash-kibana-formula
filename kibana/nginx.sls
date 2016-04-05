@@ -59,6 +59,8 @@ firewalld-running:
     - name: firewalld
     - enable: True
     - reload: True
+    - watch:
+      - firewalld: public-zone
 
 # Open the firewall to allow http traffic
 public-zone:
