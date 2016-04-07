@@ -1,10 +1,13 @@
 {% set elk_gpg_key_url = salt['pillar.get']('elk_gpg_key_url', 'https://packages.elastic.co/GPG-KEY-elasticsearch') %}
 {% set filebeat_download_url = salt['pillar.get']('filebeat_download_url',' https://download.elastic.co/beats/filebeat/filebeat-1.1.2-x86_64.rpm') %} 
 
+# Don't install the jdk if another version of java is already present
+{% if 1 == salt['cmd.retcode']('which java') %}
 java-jdk-install:
   pkg.installed:
     - pkgs:
       - java-1.8.0-openjdk
+{% endif %}
 
 elk-repo-gpg-key:
   file.managed:
