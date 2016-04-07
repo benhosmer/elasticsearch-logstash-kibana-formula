@@ -58,7 +58,6 @@ firewalld-running:
   service.running:
     - name: firewalld
     - enable: True
-    - reload: True
     - watch:
       - firewalld: public-zone
 

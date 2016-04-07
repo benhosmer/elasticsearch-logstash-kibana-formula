@@ -257,7 +257,7 @@ output:
   ### Logstash as output
   logstash:
     # The Logstash hosts
-    hosts: ["0.0.0.0:5044"]
+    hosts: ["localhost:5044"]
 
     # Number of workers per Logstash host.
     #worker: 1
@@ -271,7 +271,7 @@ output:
     # Optional index name. The default index name depends on the each beat.
     # For Packetbeat, the default is set to packetbeat, for Topbeat
     # top topbeat and for Filebeat to filebeat.
-    index: elk-rulz 
+    index: elk-test 
 
     # Optional TLS. By default is off.
     #tls:

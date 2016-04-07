@@ -107,4 +107,26 @@ kibana-service:
 #      - pkg: elk-pkgs
 #    - template: jinja
 #
+elasticsearch-conf:
+ file.managed:
+   - name: /etc/elasticsearch/elasticsearch.yml
+   - source: salt://elk/elasticsearch.yml
+   - require:
+     - pkg: elk-pkgs
+   - template: jinja
+logstash-conf:
+ file.managed:
+   - name: /etc/logstash/conf.d/logstash.conf
+   - source: salt://elk/logstash.conf
+   - require:
+     - pkg: elk-pkgs
+   - template: jinja
+kibana-conf:
+ file.managed:
+   - name: /opt/kibana/config/kibana.yml
+   - source: salt://elk/kibana.yml
+   - require:
+     - pkg: elk-pkgs
+   - template: jinja
+
 
