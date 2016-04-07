@@ -59,12 +59,6 @@ elk-pkgs:
      - pkgrepo: kibana
      - file: elk-repo-gpg-key
 
-logstash-beats-plugin:
-  cmd.run:
-    - name: /opt/logstash/bin/plugin install logstash-input-beats
-    - require:
-      - pkg: elk-pkgs
-
 elasticsearch-service:
   service.running:
     - name: elasticsearch
@@ -89,30 +83,6 @@ kibana-service:
       - pkg: java-jdk-install
       - pkg: elk-pkgs
 
-#logstash-beats-conf:
-#  file.managed:
-#    - name: /etc/logstash/conf.d/02-beats-input.conf
-#    - source: salt://elk/logstash-beats-input.conf
-#    - require:
-#      - pkg: elk-pkgs
-#    - template: jinja
-#
-#logstash-audit-filter-conf:
-#  file.managed:
-#    - name: /etc/logstash/conf.d/10-auditlog-filter.conf
-#    - source: salt://elk/logstash-auditlog-filter.conf
-#    - require:
-#      - pkg: elk-pkgs
-#    - template: jinja
-#
-#logstash-elasticsearch-out-conf:
-#  file.managed:
-#    - name: /etc/logstash/conf.d/30-elasticsearch-output.conf
-#    - source: salt://elk/logstash-elasticsearch-out.conf
-#    - require:
-#      - pkg: elk-pkgs
-#    - template: jinja
-#
 elasticsearch-conf:
  file.managed:
    - name: /etc/elasticsearch/elasticsearch.yml
@@ -120,6 +90,7 @@ elasticsearch-conf:
    - require:
      - pkg: elk-pkgs
    - template: jinja
+
 logstash-conf:
  file.managed:
    - name: /etc/logstash/conf.d/logstash.conf
@@ -127,6 +98,7 @@ logstash-conf:
    - require:
      - pkg: elk-pkgs
    - template: jinja
+
 kibana-conf:
  file.managed:
    - name: /opt/kibana/config/kibana.yml
