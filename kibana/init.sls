@@ -59,6 +59,12 @@ elk-pkgs:
      - pkgrepo: kibana
      - file: elk-repo-gpg-key
 
+logstash-beats-plugin:
+  cmd.run:
+    - name: /opt/logstash/bin/plugin install logstash-input-beats
+    - require:
+      - pkg: elk-pkgs
+
 elasticsearch-service:
   service.running:
     - name: elasticsearch
@@ -128,5 +134,4 @@ kibana-conf:
    - require:
      - pkg: elk-pkgs
    - template: jinja
-
 
