@@ -14,7 +14,6 @@ elk-repo-gpg-key:
     - source: {{ elk_gpg_key_url }}
     - source_hash: md5=41c14e54aa0d201ae680bb34c199be98
 
-#@TODO add proxy if c2senv
 elastic-repo:
   pkgrepo.managed:
     - humanname: Elasticsearch
@@ -30,15 +29,7 @@ logstash-repo:
     - baseurl: {{ logstash_repo_url }}
     - gpgcheck: 1
     - gpgkey: file:///etc/pki/rpm-gpg/GPG-KEY-elasticsearch
-    {% if pillar['c2senv'] == True %}
-    {% if "https" in logstash_repo_url %}
-    - proxy: {{ pillar['proxies']['https'] }}
-    {% else %}
-    - proxy: {{ pillar['proxies']['http'] }}
-    {% endif %}
-    {% endif %}
 
-#@TODO Add proxy if C2S env 
 kibana-repo:
   pkgrepo.managed:
     - humanname: kibana
