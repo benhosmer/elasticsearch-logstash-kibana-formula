@@ -6,13 +6,6 @@ nginx-repo:
     - humanname: nginx
     - baseurl: {{ nginx_yum_domain }}/packages/centos/7/x86_64/
     - gpgcheck: 0
-    {% if pillar['c2senv'] == True %}
-    {% if "https" in pillar['nginx_yum_domain'] %}
-    - proxy: {{ pillar['proxies']['https'] }}
-    {% else %}
-    - proxy: {{ pillar['proxies']['http'] }}
-    {% endif %}
-    {% endif %} 
 
 nginx:
   pkg.installed:
