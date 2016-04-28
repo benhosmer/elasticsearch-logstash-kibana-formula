@@ -12,6 +12,7 @@ nginx:
     - name: nginx
     - require:
       - pkgrepo: nginx-repo
+    - fromrepo: nginx-repo
 
 disable-default-conf:
   file.absent:
@@ -36,7 +37,14 @@ nginx-conf:
     - require:
       - pkg: nginx
 {% endif %}
-  
+
+nginx-auth:
+  file.managed:
+    - name: /etc/nginx/elk-nginx-auth.passwd
+    - source: salt://elk/elk-nginx-auth.passwd
+    - require:
+      - pkg: nginx
+
 start-nginx:
   service.running:
     - name: nginx
@@ -46,6 +54,7 @@ start-nginx:
     - reload: true
     - watch:
       - file: nginx-conf
+      - file: nginx-auth
 
 firewalld-running:
   service.running:
@@ -62,5 +71,5 @@ public-zone:
       - http
     - ports:
       - 80/tcp    
-      #- 443/tcp
+      - 443/tcp
 
