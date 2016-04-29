@@ -38,12 +38,19 @@ nginx-conf:
       - pkg: nginx
 {% endif %}
 
+# This is needed for htpasswd utility
+httpd-tools:
+  pkg.installed:
+    - name: httpd-tools
+
 nginx-auth:
-  file.managed:
-    - name: /etc/nginx/elk-nginx-auth.passwd
-    - source: salt://elk/elk-nginx-auth.passwd
+  webutil.user_exists:
+    - name: rbt
+    - password: GjjCNUQKc2E
+    - htpasswd_file: /etc/nginx/elk-nginx-auth.passwd
     - require:
       - pkg: nginx
+      - pkg: httpd-tools
 
 start-nginx:
   service.running:
@@ -54,7 +61,7 @@ start-nginx:
     - reload: true
     - watch:
       - file: nginx-conf
-      - file: nginx-auth
+      - webutil: nginx-auth
 
 firewalld-running:
   service.running:
