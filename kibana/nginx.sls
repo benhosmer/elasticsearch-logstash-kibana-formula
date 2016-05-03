@@ -63,6 +63,17 @@ start-nginx:
       - file: nginx-conf
       - webutil: nginx-auth
 
+{% if salt['cmd.retcode']('which firewalld') !== 0 %}
+install-firewalld:
+  pkg.installed:
+    - name: firewalld
+
+stop-iptables:
+  service.dead:
+    - name: iptables
+    - enable: False
+{% endif %}
+
 firewalld-running:
   service.running:
     - name: firewalld
